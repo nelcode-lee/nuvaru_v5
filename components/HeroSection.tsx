@@ -16,7 +16,18 @@ export default function HeroSection() {
   return (
     <>
       <section className="relative py-24 px-4 bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900 overflow-hidden">
+        {/* Background pattern for better particle visibility */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                             radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.1) 0%, transparent 50%)`,
+            backgroundSize: '100px 100px, 150px 150px',
+            backgroundPosition: '0 0, 50px 50px'
+          }} />
+        </div>
+        
         <HeroParticles />
+        
         <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
           {/* Left: Text */}
           <div className="flex-1 max-w-2xl text-center lg:text-left">

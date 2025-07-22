@@ -17,32 +17,67 @@ export default function HeroParticles() {
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
-      {/* CSS-based particle animation */}
+      {/* Large floating particles */}
       <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-white rounded-full opacity-60 animate-pulse"
+            className="absolute bg-white/20 rounded-full animate-float"
             style={{
+              width: `${8 + Math.random() * 12}px`,
+              height: `${8 + Math.random() * 12}px`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${6 + Math.random() * 4}s`
             }}
           />
         ))}
         
-        {/* Floating connection lines */}
-        {[...Array(8)].map((_, i) => (
+        {/* Medium particles */}
+        {[...Array(25)].map((_, i) => (
+          <div
+            key={`medium-${i}`}
+            className="absolute bg-blue-400/30 rounded-full animate-pulse"
+            style={{
+              width: `${4 + Math.random() * 6}px`,
+              height: `${4 + Math.random() * 6}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${3 + Math.random() * 2}s`
+            }}
+          />
+        ))}
+
+        {/* Small sparkles */}
+        {[...Array(40)].map((_, i) => (
+          <div
+            key={`sparkle-${i}`}
+            className="absolute bg-white/40 rounded-full animate-twinkle"
+            style={{
+              width: `${2 + Math.random() * 3}px`,
+              height: `${2 + Math.random() * 3}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${4 + Math.random() * 3}s`
+            }}
+          />
+        ))}
+
+        {/* Connection lines */}
+        {[...Array(12)].map((_, i) => (
           <div
             key={`line-${i}`}
-            className="absolute w-px h-16 bg-gradient-to-b from-transparent via-white/30 to-transparent"
+            className="absolute bg-gradient-to-b from-transparent via-blue-400/20 to-transparent animate-float"
             style={{
-              left: `${20 + (i * 10)}%`,
+              width: '1px',
+              height: `${40 + Math.random() * 60}px`,
+              left: `${10 + (i * 7)}%`,
               top: `${Math.random() * 100}%`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-              animation: `float ${3 + Math.random() * 2}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 2}s`
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${5 + Math.random() * 3}s`
             }}
           />
         ))}
@@ -50,17 +85,50 @@ export default function HeroParticles() {
       
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
-          50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+          0%, 100% { 
+            transform: translateY(0px) translateX(0px); 
+            opacity: 0.3; 
+          }
+          25% { 
+            transform: translateY(-15px) translateX(5px); 
+            opacity: 0.7; 
+          }
+          50% { 
+            transform: translateY(-25px) translateX(-3px); 
+            opacity: 1; 
+          }
+          75% { 
+            transform: translateY(-10px) translateX(8px); 
+            opacity: 0.6; 
+          }
+        }
+        
+        @keyframes twinkle {
+          0%, 100% { 
+            opacity: 0.2; 
+            transform: scale(1); 
+          }
+          50% { 
+            opacity: 1; 
+            transform: scale(1.2); 
+          }
+        }
+        
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+        
+        .animate-twinkle {
+          animation: twinkle 4s ease-in-out infinite;
         }
         
         .animate-pulse {
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
         
         @keyframes pulse {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
         }
       `}</style>
     </div>
