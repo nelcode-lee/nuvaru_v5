@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowRight,
   CheckCircle,
@@ -27,8 +29,13 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import HeroSection from "@/components/HeroSection";
+import BookCallModal from "@/components/BookCallModal";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [isBookCallModalOpen, setIsBookCallModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
@@ -51,107 +58,19 @@ export default function HomePage() {
               <Link href="#contact" className="text-gray-300 hover:text-white transition-colors">
                 Contact
               </Link>
-              <Button className="bg-blue-600 hover:bg-blue-700">Book a Call</Button>
+              <Button 
+                className="bg-blue-600 hover:bg-blue-700"
+                onClick={() => setIsBookCallModalOpen(true)}
+              >
+                Book a Call
+              </Button>
             </nav>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="py-24 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-green-600/10"></div>
-        <div className="container mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left Column - Text Content */}
-            <div className="text-center lg:text-left">
-              <Badge variant="secondary" className="mb-6 bg-blue-600/10 text-blue-400 border-blue-600/20 px-4 py-2">
-                🚀 AI-Powered Business Automation
-              </Badge>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-blue-100 to-green-100 bg-clip-text text-transparent leading-tight">
-                Outpace. <span className="text-red-400">Outperform.</span> Outgrow.
-                <br />
-                <span className="text-blue-400 text-3xl md:text-4xl lg:text-5xl">AI isn't the future</span>{" "}
-                <span className="text-3xl md:text-4xl lg:text-5xl">— it's the advantage.</span>
-              </h1>
-              <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Nuvaru builds custom AI automation that slashes costs, unlocks growth, and eliminates the grind across
-                Marketing, HR, Finance, and Ops. While others are stuck scaling teams, you'll be scaling revenue. The
-                businesses that move now will dominate. Be one of them.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-16">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 px-8 py-4 text-lg">
-                  Get Your Free Automation Audit
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-
-              {/* Social Proof */}
-              <div className="flex flex-col md:flex-row items-center justify-center lg:justify-start gap-8 text-gray-400">
-                <div className="flex items-center gap-2">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <div
-                        key={i}
-                        className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-500 rounded-full border-2 border-gray-900"
-                      ></div>
-                    ))}
-                  </div>
-                  <span className="text-sm">50+ businesses automated</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                  <span className="text-sm ml-2">4.9/5 client satisfaction</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column - Video Avatar */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Video Container */}
-                <div className="relative w-96 h-[30rem] lg:w-[28rem] lg:h-[36rem] rounded-3xl overflow-hidden bg-gradient-to-br from-blue-600/20 to-green-600/20 border border-gray-700">
-                  {/* Synthesia Video */}
-                  <iframe
-                    src="https://share.synthesia.io/1ecbd1e6-7845-41cc-8eab-e26bd03a619c"
-                    className="absolute inset-0 w-full h-full rounded-3xl"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen"
-                    allowFullScreen
-                    title="Nuvaru AI Expert Video"
-                  />
-
-                  {/* Animated Border */}
-                  <div className="absolute inset-0 rounded-3xl border-2 border-blue-400/30 animate-pulse pointer-events-none"></div>
-
-                  {/* Floating Elements */}
-                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-green-500 rounded-full animate-bounce pointer-events-none"></div>
-                  <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-blue-500 rounded-full animate-bounce delay-300 pointer-events-none"></div>
-                  <div className="absolute top-1/4 -left-6 w-4 h-4 bg-yellow-400 rounded-full animate-pulse pointer-events-none"></div>
-                  <div className="absolute bottom-1/4 -right-6 w-5 h-5 bg-purple-500 rounded-full animate-pulse delay-500 pointer-events-none"></div>
-                </div>
-
-                {/* Stats Floating Cards */}
-                <div className="absolute -top-8 -left-8 bg-gray-800 border border-gray-700 rounded-xl p-3 shadow-lg">
-                  <div className="text-green-400 font-bold text-lg">75%</div>
-                  <div className="text-gray-400 text-xs">Time Saved</div>
-                </div>
-
-                <div className="absolute -bottom-8 -right-8 bg-gray-800 border border-gray-700 rounded-xl p-3 shadow-lg">
-                  <div className="text-blue-400 font-bold text-lg">24/7</div>
-                  <div className="text-gray-400 text-xs">Automation</div>
-                </div>
-
-                <div className="absolute top-1/2 -right-12 bg-gray-800 border border-gray-700 rounded-xl p-3 shadow-lg">
-                  <div className="text-yellow-400 font-bold text-lg">3x</div>
-                  <div className="text-gray-400 text-xs">ROI Boost</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Problem Section */}
       <section className="py-20 px-4 bg-gray-800/30">
@@ -552,7 +471,11 @@ export default function HomePage() {
             Book a free 30-minute consultation and discover how much time and money you could save with automation.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 px-8 py-4 text-lg">
+            <Button 
+              size="lg" 
+              className="bg-blue-600 hover:bg-blue-700 px-8 py-4 text-lg"
+              onClick={() => setIsBookCallModalOpen(true)}
+            >
               Book Your Free Consultation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
@@ -621,6 +544,8 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      <BookCallModal isOpen={isBookCallModalOpen} onClose={() => setIsBookCallModalOpen(false)} />
     </div>
   )
 }
