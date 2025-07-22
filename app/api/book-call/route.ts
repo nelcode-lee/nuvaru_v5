@@ -1,47 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
+  const data = await request.json();
+
+  // Compose admin email content
+  const html = `
+    <h2>New Book a Call Submission</h2>
+    <ul>
+      ${Object.entries(data).map(([key, value]) => `<li><b>${key}:</b> ${value}</li>`).join('')}
+    </ul>
+  `;
+
+  // Compose user confirmation email
+  const userHtml = `
+    <h2>Thank you for booking a call!</h2>
+    <p>Hi ${data.name || data.email},</p>
+    <p>We've received your request to book a call with Nuvaru. Our team will contact you soon to confirm your appointment.</p>
+    <p>If you have any questions, reply to this email or contact us at <a href="mailto:lee@nuvaru.co.uk">lee@nuvaru.co.uk</a>.</p>
+    <hr />
+    <p><b>Your submission:</b></p>
+    <ul>
+      ${Object.entries(data).map(([key, value]) => `<li><b>${key}:</b> ${value}</li>`).join('')}
+    </ul>
+    <p>— The Nuvaru Team</p>
+  `;
+
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT),
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+
   try {
-    const data = await request.json();
-    const resendApiKey = process.env.RESEND_API_KEY;
-    if (!resendApiKey) {
-      console.warn('RESEND_API_KEY not configured, skipping email sending');
-      return NextResponse.json({ error: 'Email service not configured' }, { status: 500 });
-    }
-    const resend = new Resend(resendApiKey);
-
-    // Compose email content
-    const htmlContent = `
-      <h2>New Book a Call Submission</h2>
-      <ul>
-        <li><b>Name:</b> ${data.name}</li>
-        <li><b>Email:</b> ${data.email}</li>
-        <li><b>Phone:</b> ${data.phone || 'N/A'}</li>
-        <li><b>Company:</b> ${data.company || 'N/A'}</li>
-        <li><b>Consultation Type:</b> ${data.callType}</li>
-        <li><b>Preferred Date:</b> ${data.preferredDate}</li>
-        <li><b>Preferred Time:</b> ${data.preferredTime}</li>
-        <li><b>Message:</b> ${data.message || 'N/A'}</li>
-      </ul>
-      <p>Submitted at: ${new Date().toLocaleString()}</p>
-    `;
-    const textContent = `New Book a Call Submission\n\nName: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || 'N/A'}\nCompany: ${data.company || 'N/A'}\nConsultation Type: ${data.callType}\nPreferred Date: ${data.preferredDate}\nPreferred Time: ${data.preferredTime}\nMessage: ${data.message || 'N/A'}\nSubmitted at: ${new Date().toLocaleString()}`;
-
-    const { error } = await resend.emails.send({
-      from: 'Nuvaru <reports@nuvaru.com>',
-      to: ['lee@nuvaru.co.uk'],
-      subject: `New Book a Call Submission from ${data.name}`,
-      html: htmlContent,
-      text: textContent,
+    // Send admin notification
+    await transporter.sendMail({
+      from: `Nuvaru Website <${process.env.SMTP_USER}>`,
+      to: 'lee@nuvaru.co.uk',
+      subject: 'New Book a Call Submission',
+      html,
     });
-    if (error) {
-      console.error('Error sending Book a Call email:', error);
-      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
-    }
+    // Send user confirmation
+    await transporter.sendMail({
+      from: `Nuvaru Website <${process.env.SMTP_USER}>`,
+      to: data.email,
+      subject: 'Your Nuvaru Call Booking Received',
+      html: userHtml,
+    });
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error processing Book a Call request:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Book a Call email send error:', error);
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 } 
