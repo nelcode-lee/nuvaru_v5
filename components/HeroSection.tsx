@@ -16,24 +16,9 @@ export default function HeroSection() {
   return (
     <>
       <section className="relative py-24 px-4 bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900 overflow-hidden">
-        {/* Enhanced background pattern for better visibility */}
-        <div className="absolute inset-0 opacity-40">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
-                             radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.4) 0%, transparent 50%),
-                             radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.3) 0%, transparent 60%)`,
-            backgroundSize: '300px 300px, 400px 400px, 200px 200px',
-            backgroundPosition: '0 0, 100px 100px, 50px 50px'
-          }} />
-        </div>
-        
-        {/* Additional prominent glow effects */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-green-500/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-purple-500/15 rounded-full blur-2xl animate-pulse" style={{animationDelay: '4s'}}></div>
-          <div className="absolute top-1/3 right-1/3 w-80 h-80 bg-yellow-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute bottom-1/3 left-1/3 w-56 h-56 bg-red-500/15 rounded-full blur-2xl animate-pulse" style={{animationDelay: '3s'}}></div>
+        {/* Simple background pattern */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/15 to-green-600/20"></div>
         </div>
         
         <HeroParticles />
