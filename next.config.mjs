@@ -11,7 +11,6 @@ const nextConfig = {
   },
   // Optimize for faster builds
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
   },
   // Reduce build time by skipping unnecessary steps
