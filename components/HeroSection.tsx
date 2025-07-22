@@ -4,6 +4,7 @@ import { ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import AuditModal from "./AuditModal";
+import HeroParticles from "./HeroParticles";
 
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +16,7 @@ export default function HeroSection() {
   return (
     <>
       <section className="relative py-24 px-4 bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900">
+        <HeroParticles />
         <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
           {/* Left: Text */}
           <div className="flex-1 max-w-2xl text-center lg:text-left">
