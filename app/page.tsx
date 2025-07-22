@@ -518,7 +518,14 @@ export default function HomePage() {
               <CardContent className="pt-6">
                 <MessageSquare className="h-8 w-8 text-blue-600 mx-auto mb-4" />
                 <h3 className="font-semibold text-white mb-2">WhatsApp</h3>
-                <p className="text-gray-400">+44 (0) 123 456 7890</p>
+                <a 
+                  href="https://wa.me/447741654145" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-blue-400 transition-colors"
+                >
+                  +44 774 165 4145
+                </a>
               </CardContent>
             </Card>
 
@@ -526,7 +533,7 @@ export default function HomePage() {
               <CardContent className="pt-6">
                 <MapPin className="h-8 w-8 text-blue-600 mx-auto mb-4" />
                 <h3 className="font-semibold text-white mb-2">Location</h3>
-                <p className="text-gray-400">United Kingdom</p>
+                <p className="text-gray-400">Hull, UK</p>
               </CardContent>
             </Card>
           </div>
