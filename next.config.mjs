@@ -10,7 +10,6 @@ const nextConfig = {
     unoptimized: true,
   },
   // Optimize for faster builds
-  swcMinify: true,
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
