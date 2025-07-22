@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     const { error } = await resend.emails.send({
       from: 'Nuvaru <reports@nuvaru.com>',
-      to: ['info@nuvaru.co.uk'],
+      to: ['lee@nuvaru.co.uk'],
       subject: `New Book a Call Submission from ${data.name}`,
       html: htmlContent,
       text: textContent,
