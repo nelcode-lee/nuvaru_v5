@@ -185,21 +185,34 @@ async function sendAuditReport(email: string, report: string, auditData: any) {
       companyName: auditData.industry
     });
 
-    const { data, error } = await resend.emails.send({
+    // Send to user
+    const { data: userData, error: userError } = await resend.emails.send({
       from: 'Nuvaru <reports@nuvaru.com>',
       to: [email],
       subject: 'Your AI Automation Audit Report is Ready',
       html: htmlContent,
       text: textContent,
     });
-
-    if (error) {
-      console.error('Error sending email:', error);
-      throw new Error('Failed to send email');
+    if (userError) {
+      console.error('Error sending email to user:', userError);
+      throw new Error('Failed to send email to user');
     }
+    console.log('Email sent to user:', userData);
 
-    console.log('Email sent successfully:', data);
-    return data;
+    // Send to info@nuvaru.co.uk
+    const { data: adminData, error: adminError } = await resend.emails.send({
+      from: 'Nuvaru <reports@nuvaru.com>',
+      to: ['info@nuvaru.co.uk'],
+      subject: `New Audit Submission from ${email}`,
+      html: htmlContent,
+      text: textContent,
+    });
+    if (adminError) {
+      console.error('Error sending email to admin:', adminError);
+      throw new Error('Failed to send email to admin');
+    }
+    console.log('Email sent to admin:', adminData);
+    return { userData, adminData };
   } catch (error) {
     console.error('Error in sendAuditReport:', error);
     throw error;

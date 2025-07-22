@@ -38,25 +38,28 @@ export default function BookCallModal({ isOpen, onClose }: BookCallModalProps) {
     setIsSubmitting(true);
     
     try {
-      // For now, we'll just simulate the API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Success - show confirmation and close modal
-      alert(`Thank you ${formData.name}! We'll contact you at ${formData.email} to confirm your consultation call.`);
-      onClose();
-      
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        preferredDate: "",
-        preferredTime: "",
-        callType: "",
-        message: "",
+      const response = await fetch("/api/book-call", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
-
+      const result = await response.json();
+      if (response.ok && result.success) {
+        alert(`Thank you ${formData.name}! We'll contact you at ${formData.email} to confirm your consultation call.`);
+        onClose();
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          preferredDate: "",
+          preferredTime: "",
+          callType: "",
+          message: "",
+        });
+      } else {
+        alert(result.error || "There was an error submitting your request. Please try again.");
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("There was an error submitting your request. Please try again.");
