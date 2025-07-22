@@ -4,7 +4,13 @@ import { ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import AuditModal from "./AuditModal";
-import HeroParticles from "./HeroParticles";
+import dynamic from "next/dynamic";
+
+// Dynamically import HeroParticles with no SSR to ensure it works on live site
+const HeroParticles = dynamic(() => import("./HeroParticles"), { 
+  ssr: false,
+  loading: () => <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900" />
+});
 
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +21,7 @@ export default function HeroSection() {
 
   return (
     <>
-      <section className="relative py-24 px-4 bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900">
+      <section className="relative py-24 px-4 bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900 overflow-hidden">
         <HeroParticles />
         <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
           {/* Left: Text */}
