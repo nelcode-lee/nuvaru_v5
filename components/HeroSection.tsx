@@ -34,6 +34,7 @@ export default function HeroSection() {
               <span className="block text-red-400">Outperform.</span>
               <span className="block">Outgrow.</span>
               <span className="block text-blue-400 text-3xl mt-2">AI isn't the future — it's the advantage.</span>
+              <span className="block text-green-400 text-2xl mt-4">DEPLOYMENT-TEST-XYZ123</span>
             </h1>
             <p className="text-xl text-gray-300 mb-10">
               Nuvaru builds custom AI automation that slashes costs, unlocks growth, and eliminates the grind across Marketing, HR, Finance, and Ops. While others are stuck scaling teams, you'll be scaling revenue. The businesses that move now will dominate. Be one of them.
